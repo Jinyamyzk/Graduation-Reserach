@@ -42,7 +42,7 @@ tfidf = gensim.models.TfidfModel(corpus)
 # make corpus_tfidf
 corpus_tfidf = tfidf[corpus]
 
-NUM_TOPICS = 10
+NUM_TOPICS = 16
 
 # LDA Model
 # logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -97,4 +97,4 @@ for i, t in enumerate(range(lda_model.num_topics)):
     axs[i].set_title('Topic '+str(t))
 
 plt.tight_layout()
-plt.savefig("visualize.png")
+plt.savefig(f'visualize_{NUM_TOPICS}.png')

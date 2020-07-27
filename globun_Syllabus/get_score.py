@@ -16,7 +16,7 @@ def score_to_gpa(score):
     elif score == '不可':
         return 0
     elif score == '合格':
-        return 2
+        return 0
     elif score == '取消':
         return 0
 
@@ -33,8 +33,8 @@ element.click()
 time.sleep(1)
 
 
-driver.find_element_by_id('j_username').send_keys('')#自分のIDを入れる
-driver.find_element_by_id('j_password').send_keys('')#パスワードを入れる
+driver.find_element_by_id('j_username').send_keys('1840575h')#自分のIDを入れる
+driver.find_element_by_id('j_password').send_keys('xFsOvK0+')#パスワードを入れる
 driver.find_element_by_name('_eventId_proceed').click()
 print('ログイン成功')
 time.sleep(1)
@@ -70,9 +70,9 @@ for tr_tag in tr_tags:
     list.append(gpa)
     grades.append(list)
 
-with open('/Users/Jinya/Desktop/Syllabus/grade2.csv', 'w',encoding='utf8') as f:
+with open('grade_Kim.csv', 'w',encoding='utf8') as f:
         writer = csv.writer(f)
-        writer.writerow(["年度","時間割コード","GPA"])
+        writer.writerow(["年度","時間割コード","Score"])
         writer.writerows(grades)
 
 
