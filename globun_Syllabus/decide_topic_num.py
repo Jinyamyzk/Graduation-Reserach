@@ -45,7 +45,7 @@ for i in range(start, limit, step):
     total_coherence_vals.append(0)
     total_perplexity_vals.append(0)
 
-for i in range(1):
+for i in range(10):
     coherence_vals = []
     perplexity_vals = []
     for n_topic in tqdm(range(start, limit, step)):
