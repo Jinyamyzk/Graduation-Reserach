@@ -13,7 +13,7 @@ t = Tokenizer()
 
 stop_words = stopwords.words('english')
 stop_words_number = list(range(10))
-add_stop_words = ['.','(',')','\"','\'','がち','テーマ','の','上','系','年','次','卒業','等','期','もと','ため','こと','もの','的','よう','授業','前期','後期','研究','演習','たち','目標','the','The','in']
+add_stop_words = [,',','.','(',')','\"','\'','がち','テーマ','の','上','系','年','次','卒業','等','期','もと','ため','こと','もの','的','よう','授業','前期','後期','研究','演習','たち','目標','the','The','in']
 stop_words.extend(stop_words_number)
 stop_words.extend(add_stop_words)
 

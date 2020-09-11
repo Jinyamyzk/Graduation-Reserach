@@ -38,15 +38,24 @@ start = 2
 limit = 50
 step = 2
 
-coherence_vals = []
-perplexity_vals = []
+#初期値
+total_coherence_vals = []
+total_perplexity_vals = []
+for i in range(start, limit, step):
+    total_coherence_vals.append(0)
+    total_perplexity_vals.append(0)
 
-for n_topic in tqdm(range(start, limit, step)):
+for i in range(1):
+    coherence_vals = []
+    perplexity_vals = []
+    for n_topic in tqdm(range(start, limit, step)):
+        lda_model = gensim.models.ldamodel.LdaModel(corpus=corpus, id2word=dictionary, num_topics=n_topic, random_state=0)
+        perplexity_vals.append(np.exp2(-lda_model.log_perplexity(corpus)))
+        coherence_model_lda = gensim.models.CoherenceModel(model=lda_model, texts=texts, dictionary=dictionary, coherence='c_v')
+        coherence_vals.append(coherence_model_lda.get_coherence())
+    total_perplexity_vals = [(x,y) for x in perplexity_vals for y in total_perplexity_vals]
+    total_coherence_vals = [(x,y) for x in coherence_vals for y in total_coherence_vals]
 
-    lda_model = gensim.models.ldamodel.LdaModel(corpus=corpus, id2word=dictionary, num_topics=n_topic, random_state=0)
-    perplexity_vals.append(np.exp2(-lda_model.log_perplexity(corpus)))
-    coherence_model_lda = gensim.models.CoherenceModel(model=lda_model, texts=texts, dictionary=dictionary, coherence='c_v')
-    coherence_vals.append(coherence_model_lda.get_coherence())
 
 x = range(start, limit, step)
 
