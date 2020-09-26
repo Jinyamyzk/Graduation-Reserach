@@ -45,7 +45,7 @@ for i in range(start, limit, step):
     total_coherence_vals.append(0)
     total_perplexity_vals.append(0)
 
-for i in range(10):
+for i in range(5):
     coherence_vals = []
     perplexity_vals = []
     for n_topic in tqdm(range(start, limit, step)):
@@ -53,8 +53,8 @@ for i in range(10):
         perplexity_vals.append(np.exp2(-lda_model.log_perplexity(corpus)))
         coherence_model_lda = gensim.models.CoherenceModel(model=lda_model, texts=texts, dictionary=dictionary, coherence='c_v')
         coherence_vals.append(coherence_model_lda.get_coherence())
-    total_perplexity_vals = [(x,y) for x in perplexity_vals for y in total_perplexity_vals]
-    total_coherence_vals = [(x,y) for x in coherence_vals for y in total_coherence_vals]
+    total_perplexity_vals = [x+y for (x,y) in zip(perplexity_vals,total_perplexity_vals)]
+    total_coherence_vals = [(x,y) for (x,y) in zip(coherence_vals,total_coherence_vals)]
 
 
 x = range(start, limit, step)
