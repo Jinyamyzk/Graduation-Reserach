@@ -54,7 +54,7 @@ for i in range(5):
         coherence_model_lda = gensim.models.CoherenceModel(model=lda_model, texts=texts, dictionary=dictionary, coherence='c_v')
         coherence_vals.append(coherence_model_lda.get_coherence())
     total_perplexity_vals = [x+y for (x,y) in zip(perplexity_vals,total_perplexity_vals)]
-    total_coherence_vals = [(x,y) for (x,y) in zip(coherence_vals,total_coherence_vals)]
+    total_coherence_vals = [x+y for (x,y) in zip(coherence_vals,total_coherence_vals)]
 
 
 x = range(start, limit, step)

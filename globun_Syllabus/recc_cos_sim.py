@@ -2,10 +2,10 @@ import pandas as pd
 import pickle
 import csv
 import json
+import numpy as np
 
 topic_num = 6
 sum_topic_odds = [0] * topic_num
-
 
 def search_goodat_topic(nendo, code, grade):
     topic_grades = None
@@ -15,17 +15,24 @@ def search_goodat_topic(nendo, code, grade):
         topic_grades = [n * grade for n in topic_value[0]]
     return topic_grades
 
-def sum_class_score(nendo):
+def cos_sim(v1, v2):
+    v1_array = np.array(v1)
+    v2_array = np.array(v2)
+    return np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))
+
+def reccomend(nendo):
     available_classes = df[(df['年度'] == nendo)]
     class_names_topics = available_classes[['科目名','トピックの確率']].values.tolist()
     for class_name_topic in class_names_topics:
-        combined = [x*y for (x,y) in zip(class_name_topic[1],sum_topic_odds)]
-        total_class_score = sum(combined)
-        class_name_topic[1] = total_class_score
-        class_names.append(class_name_topic)
+        similarity = cos_sim(class_name_topic[1],sum_topic_odds)
+        class_name_topic[1] = similarity
+        class_names_cos_sim.append(class_name_topic)
+
+
+
 
 df = pd.read_json('syllabus_tfidf.json')
-with open('grade_A.csv') as f:
+with open('grade_Kim.csv') as f:
     h = next(csv.reader(f))
     reader = csv.reader(f)
     grades = [e for e in reader]
@@ -36,11 +43,10 @@ for row in grades:
     if topic_grades is not None:
         sum_topic_odds = [topic_grades[i] + sum_topic_odds[i] for i in range(len(topic_grades))]
 
-print("name:Shogo")
-class_names = []
+class_names_cos_sim = []
 # sum_topic_odds = list(map(lambda x: x/len(grades), sum_topic_odds))
-sum_class_score(2020)
-class_names_sorted = sorted(class_names, reverse=True, key=lambda x: x[1])
+reccomend(2020)
+reccomend_class = sorted(class_names_cos_sim, reverse=True, key=lambda x: x[1])
 # print(class_names_sorted)
-for i in class_names_sorted[0:10]:
+for i in reccomend_class[0:10]:
     print(i)

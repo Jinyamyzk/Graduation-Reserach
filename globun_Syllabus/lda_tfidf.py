@@ -42,7 +42,7 @@ tfidf = gensim.models.TfidfModel(corpus)
 # make corpus_tfidf
 corpus_tfidf = tfidf[corpus]
 
-NUM_TOPICS = 16
+NUM_TOPICS = 6
 
 # LDA Model
 # logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -58,7 +58,7 @@ print("perplexity:", perplexity)
 def get_topic_words(topic_id):
     for t in lda_model.get_topic_terms(topic_id):
         print("{}: {}".format(dictionary[t[0]], t[1]))
-for t in range(10):
+for t in range(6):
     print("Topic # ",t)
     get_topic_words(t)
     print("\n")
@@ -73,42 +73,42 @@ test_corpus = [dictionary.doc2bow(text) for text in texts]
 topic_results = []
 
 
-# # クラスタリング結果を出力
-# for unseen_doc in test_corpus:
-#     score_by_topic = [0] * NUM_TOPICS
-#     for topic, score in lda_model[unseen_doc]:
-#         score_by_topic[topic] = score
-#     topic_results.append(score_by_topic)
-#
-# df = pd.read_csv('syllabus_globun.csv')
-# df['トピックの確率'] = topic_results
-# print(df)
-# df.to_json('syllabus_tfidf.json')
-#
-# np.random.seed(0)
-# FONT = "/Library/Fonts/Arial Unicode.ttf"
-#
-#
-# ncols = math.ceil(NUM_TOPICS/2)
-# nrows = math.ceil(lda_model.num_topics/ncols)
-# fig, axs = plt.subplots(ncols=ncols, nrows=nrows, figsize=(15,7))
-# axs = axs.flatten()
-#
-# def color_func(word, font_size, position, orientation, random_state, font_path):
-#     return 'darkturquoise'
-#
-# for i, t in enumerate(range(lda_model.num_topics)):
-#
-#     x = dict(lda_model.show_topic(t, 30))
-#     im = WordCloud(
-#         font_path=FONT,
-#         background_color='white',
-#         color_func=color_func,
-#         random_state=0
-#     ).generate_from_frequencies(x)
-#     axs[i].imshow(im)
-#     axs[i].axis('off')
-#     axs[i].set_title('Topic '+str(t))
-#
-# plt.tight_layout()
-# plt.savefig(f'visualize_{NUM_TOPICS}.png')
+# クラスタリング結果を出力
+for unseen_doc in test_corpus:
+    score_by_topic = [0] * NUM_TOPICS
+    for topic, score in lda_model[unseen_doc]:
+        score_by_topic[topic] = score
+    topic_results.append(score_by_topic)
+
+df = pd.read_csv('syllabus_globun.csv')
+df['トピックの確率'] = topic_results
+print(df)
+df.to_json('syllabus_tfidf.json')
+
+np.random.seed(0)
+FONT = "/Library/Fonts/Arial Unicode.ttf"
+
+
+ncols = math.ceil(NUM_TOPICS/2)
+nrows = math.ceil(lda_model.num_topics/ncols)
+fig, axs = plt.subplots(ncols=ncols, nrows=nrows, figsize=(15,7))
+axs = axs.flatten()
+
+def color_func(word, font_size, position, orientation, random_state, font_path):
+    return 'darkturquoise'
+
+for i, t in enumerate(range(lda_model.num_topics)):
+
+    x = dict(lda_model.show_topic(t, 30))
+    im = WordCloud(
+        font_path=FONT,
+        background_color='white',
+        color_func=color_func,
+        random_state=0
+    ).generate_from_frequencies(x)
+    axs[i].imshow(im)
+    axs[i].axis('off')
+    axs[i].set_title('Topic '+str(t))
+
+plt.tight_layout()
+plt.savefig(f'visualize_{NUM_TOPICS}.png')
