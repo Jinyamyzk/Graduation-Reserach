@@ -4,17 +4,18 @@ import chromedriver_binary
 from bs4 import BeautifulSoup
 import csv
 
+
 def score_to_gpa(score):
     if score == '秀':
-        return 9
-    elif score == '優':
-        return 6
-    elif score == '良':
-        return 3
-    elif score == '可':
         return 2
+    elif score == '優':
+        return 2
+    elif score == '良':
+        return 1
+    elif score == '可':
+        return -1
     elif score == '不可':
-        return 0
+        return -2
     elif score == '合格':
         return 0
     elif score == '取消':
@@ -33,8 +34,8 @@ element.click()
 time.sleep(1)
 
 
-driver.find_element_by_id('j_username').send_keys('1840575h')#自分のIDを入れる
-driver.find_element_by_id('j_password').send_keys('xFsOvK0+')#パスワードを入れる
+driver.find_element_by_id('j_username').send_keys('1740628h')#自分のIDを入れる
+driver.find_element_by_id('j_password').send_keys('Pu.0nFSn')#パスワードを入れる
 driver.find_element_by_name('_eventId_proceed').click()
 print('ログイン成功')
 time.sleep(1)
@@ -66,11 +67,12 @@ for tr_tag in tr_tags:
         continue
     list.append(td_tags[4].text.strip())
     list.append(td_tags[1].text.strip())
+    # list.append(td_tags[6].text.strip())
     gpa = score_to_gpa(td_tags[6].text.strip())
     list.append(gpa)
     grades.append(list)
 
-with open('grade_Kim.csv', 'w',encoding='utf8') as f:
+with open('grade_aipo.csv', 'w',encoding='utf8') as f:
         writer = csv.writer(f)
         writer.writerow(["年度","時間割コード","Score"])
         writer.writerows(grades)

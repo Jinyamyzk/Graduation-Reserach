@@ -2,6 +2,7 @@ import pandas as pd
 import pickle
 import csv
 import json
+import numpy as np
 
 topic_num = 6
 sum_topic_odds = [0] * topic_num

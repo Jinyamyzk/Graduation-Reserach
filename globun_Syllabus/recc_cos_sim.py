@@ -32,7 +32,7 @@ def reccomend(nendo):
 
 
 df = pd.read_json('syllabus_tfidf.json')
-with open('grade_Kim.csv') as f:
+with open('grade_A.csv') as f:
     h = next(csv.reader(f))
     reader = csv.reader(f)
     grades = [e for e in reader]
@@ -42,7 +42,7 @@ for row in grades:
     topic_grades = search_goodat_topic(int(row[0]), row[1], float(row[2]))
     if topic_grades is not None:
         sum_topic_odds = [topic_grades[i] + sum_topic_odds[i] for i in range(len(topic_grades))]
-
+sum_topic_odds = list(map(lambda x: x ** 4, sum_topic_odds))
 class_names_cos_sim = []
 # sum_topic_odds = list(map(lambda x: x/len(grades), sum_topic_odds))
 reccomend(2020)
