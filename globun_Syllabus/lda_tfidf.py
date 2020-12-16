@@ -42,7 +42,7 @@ tfidf = gensim.models.TfidfModel(corpus)
 # make corpus_tfidf
 corpus_tfidf = tfidf[corpus]
 
-NUM_TOPICS = 6
+NUM_TOPICS = 2
 
 # LDA Model
 # logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -55,17 +55,17 @@ print("N: ",N)
 perplexity = np.exp2(-lda_model.log_perplexity(corpus))
 print("perplexity:", perplexity)
 
-def get_topic_words(topic_id):
-    for t in lda_model.get_topic_terms(topic_id):
-        print("{}: {}".format(dictionary[t[0]], t[1]))
-for t in range(6):
-    print("Topic # ",t)
-    get_topic_words(t)
-    print("\n")
-
-topics = sorted(lda_model.get_document_topics(corpus[0]), key=lambda t:t[1], reverse=True)
-for t in topics[:10]:
-    print("{}: {}".format(t[0], t[1]))
+# def get_topic_words(topic_id):
+#     for t in lda_model.get_topic_terms(topic_id):
+#         print("{}: {}".format(dictionary[t[0]], t[1]))
+# for t in range(6):
+#     print("Topic # ",t)
+#     get_topic_words(t)
+#     print("\n")
+#
+# topics = sorted(lda_model.get_document_topics(corpus[0]), key=lambda t:t[1], reverse=True)
+# for t in topics[:10]:
+#     print("{}: {}".format(t[0], t[1]))
 
 # テストデータをモデルに掛ける
 test_corpus = [dictionary.doc2bow(text) for text in texts]
@@ -83,7 +83,7 @@ for unseen_doc in test_corpus:
 df = pd.read_csv('syllabus_globun.csv')
 df['トピックの確率'] = topic_results
 print(df)
-df.to_json('syllabus_tfidf.json')
+df.to_json(f'syllabus_tfidf_{NUM_TOPICS}.json')
 
 np.random.seed(0)
 FONT = "/Library/Fonts/Arial Unicode.ttf"

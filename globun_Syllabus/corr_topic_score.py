@@ -17,7 +17,7 @@ def corrcoef(grade, topic):
 
 df = pd.read_json('syllabus_tfidf.json')
 
-with open('grade_sh.csv') as f:
+with open('grade_Kim.csv') as f:
     h = next(csv.reader(f))
     reader = csv.reader(f)
     grades = [e for e in reader]

@@ -1,3 +1,8 @@
+import pandas as pd
+df = pd.read_csv('data/raw_grades/SIRS1686592-3.csv', header=3, encoding="shift-jis", usecols=[1, 4, 6])
+df.to_csv('data/grades/grade1.csv', index=False)
+
+
 def score_to_gpa(score):
     if score == '秀':
         return 10
