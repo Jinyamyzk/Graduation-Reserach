@@ -6,6 +6,7 @@ import numpy as np
 import scipy.stats
 import glob
 import os
+import matplotlib.pyplot as plt
 
 #授業を見つけて、トピックベクトルに成績の値を掛ける
 def search_goodat_topic(nendo, code, grade):
@@ -72,14 +73,41 @@ for path in glob.glob("data/grades/*.csv"):
     #成績データをデータフレームとして読み込む
     df2 = pd.read_csv(path)
     reccomend_class_grade = []
-    for c in reccomend_class[0:5]:
+    for c in reccomend_class:
         class_grade = df2[(df2['年度'] == c[1]) & (df2['時間割コード'] == c[2])]
         reccomend_class_grade.append(class_grade.values[0][2])
     #ランクのリストを作る
-    rank = list(range(5, 0, -1))
-    #相関係数を求める
-    result.append([os.path.basename(path).split('.', 1)[0],corrcoef(rank, reccomend_class_grade)])
+    rank = list(range(len(reccomend_class), 0, -1))
 
-d = pd.DataFrame(result, columns=["ファイル名", "相関係数"])
-from tabulate import tabulate
-print(tabulate(d,d.columns))
+    #プロットするためのリストを作る
+    result.append([os.path.basename(path).split('.', 1)[0], reccomend_class_grade])
+
+
+    # #相関係数を求める
+    # result.append([os.path.basename(path).split('.', 1)[0],corrcoef(rank, reccomend_class_grade)])
+
+#表示する
+# d = pd.DataFrame(result, columns=["ファイル名", "相関係数"])
+# from tabulate import tabulate
+# print(tabulate(d,d.columns))
+
+
+#figure()でグラフを表示する領域をつくり，figというオブジェクトにする．
+fig = plt.figure()
+
+#add_subplot()でグラフを描画する領域を追加する．引数は行，列，場所
+ax1 = fig.add_subplot(2, 2, 1)
+ax2 = fig.add_subplot(2, 2, 2)
+ax3 = fig.add_subplot(2, 2, 3)
+ax4 = fig.add_subplot(2, 2, 4)
+
+
+axes = [ax1, ax2, ax3, ax4]
+
+i=0
+for r in result:
+    axes[i].plot(r[1])
+    i+=1
+
+fig.tight_layout()              #レイアウトの設定
+plt.show()

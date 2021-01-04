@@ -8,6 +8,13 @@ import scipy.stats
 topic_num = 6
 sum_topic_odds = [0] * topic_num
 
+def get_topic_value(nendo,code):
+    topic_grades = None
+    taken_class = df[(df['年度'] == nendo) & (df['時間割コード'] == code)]
+    topic_value = taken_class['トピックの確率'].values.tolist()
+    return topic_value
+
+
 def search_goodat_topic(nendo, code, grade):
     topic_grades = None
     taken_class = df[(df['年度'] == nendo) & (df['時間割コード'] == code)]
@@ -71,6 +78,8 @@ for i in reccomend_class[0:10]:
     print(i)
     # class_df = df[(df['年度'] == i[1]) & (df['時間割コード'] == i[2])]
     # print(class_df.values)
+    topic_value = get_topic_value(i[1],i[2])
+    print(topic_value)
     class_grade = df2[(df2['年度'] == i[1]) & (df2['時間割コード'] == i[2])]
     print(class_grade.values)
     print('--------------------------------')

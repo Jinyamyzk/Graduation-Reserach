@@ -1,7 +1,6 @@
 import pandas as pd
-df = pd.read_csv('data/raw_grades/SIRS1686592-3.csv', header=3, encoding="shift-jis", usecols=[1, 4, 6])
-df.to_csv('data/grades/grade1.csv', index=False)
-
+df = pd.read_csv('data/raw_grades/SIRS1710509.csv', header=3,encoding='cp932', usecols=[1, 4, 6])
+print(df)
 
 def score_to_gpa(score):
     if score == '秀':
