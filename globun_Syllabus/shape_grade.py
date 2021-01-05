@@ -1,5 +1,5 @@
 import pandas as pd
-df = pd.read_csv('data/raw_grades/SIRS1710509.csv', header=3,encoding='cp932', usecols=[1, 4, 6])
+df = pd.read_csv('data/raw_grades/SIRS1710509.csv', header=3, encoding='cp932', usecols=[1, 4, 6])
 print(df)
 
 def score_to_gpa(score):
