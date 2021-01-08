@@ -43,7 +43,7 @@ def corrcoef(grade, topic):
 df = pd.read_json('syllabus_tfidf.json')
 
 result = []
-
+plot_list = []
 #成績フォルダ内のcsvファイルのパスを取得
 for path in glob.glob("data/grades/*.csv"):
     #成績ファイルを開く
@@ -80,16 +80,16 @@ for path in glob.glob("data/grades/*.csv"):
     rank = list(range(len(reccomend_class), 0, -1))
 
     #プロットするためのリストを作る
-    result.append([os.path.basename(path).split('.', 1)[0], reccomend_class_grade])
+    plot_list.append([os.path.basename(path).split('.', 1)[0], reccomend_class_grade])
 
 
-    # #相関係数を求める
-    # result.append([os.path.basename(path).split('.', 1)[0],corrcoef(rank, reccomend_class_grade)])
+    #相関係数を求める
+    result.append([os.path.basename(path).split('.', 1)[0],corrcoef(rank, reccomend_class_grade)])
 
 #表示する
-# d = pd.DataFrame(result, columns=["ファイル名", "相関係数"])
-# from tabulate import tabulate
-# print(tabulate(d,d.columns))
+d = pd.DataFrame(result, columns=["ファイル名", "相関係数"])
+from tabulate import tabulate
+print(tabulate(d,d.columns))
 
 
 #figure()でグラフを表示する領域をつくり，figというオブジェクトにする．
@@ -105,8 +105,9 @@ ax4 = fig.add_subplot(2, 2, 4)
 axes = [ax1, ax2, ax3, ax4]
 
 i=0
-for r in result:
-    axes[i].plot(r[1])
+for p in plot_list:
+    axes[i].plot(p[1])
+    axes[i].set_title(p[0])
     i+=1
 
 fig.tight_layout()              #レイアウトの設定

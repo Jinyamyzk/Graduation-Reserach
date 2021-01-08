@@ -31,6 +31,7 @@ texts = [e for e in reader]
 f.close()
 
 dictionary = corpora.Dictionary(texts)
+print(dictionary)
 # make corpus
 corpus = [dictionary.doc2bow(t) for t in texts]
 
@@ -42,7 +43,7 @@ tfidf = gensim.models.TfidfModel(corpus)
 # make corpus_tfidf
 corpus_tfidf = tfidf[corpus]
 
-NUM_TOPICS = 2
+NUM_TOPICS = 6
 
 # LDA Model
 # logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -83,7 +84,7 @@ for unseen_doc in test_corpus:
 df = pd.read_csv('syllabus_globun.csv')
 df['トピックの確率'] = topic_results
 print(df)
-df.to_json(f'syllabus_tfidf_{NUM_TOPICS}.json')
+# df.to_json(f'syllabus_tfidf_{NUM_TOPICS}.json')
 
 np.random.seed(0)
 FONT = "/Library/Fonts/Arial Unicode.ttf"
@@ -95,7 +96,7 @@ fig, axs = plt.subplots(ncols=ncols, nrows=nrows, figsize=(15,7))
 axs = axs.flatten()
 
 def color_func(word, font_size, position, orientation, random_state, font_path):
-    return 'darkturquoise'
+    return 'black'
 
 for i, t in enumerate(range(lda_model.num_topics)):
 
@@ -111,4 +112,5 @@ for i, t in enumerate(range(lda_model.num_topics)):
     axs[i].set_title('Topic '+str(t))
 
 plt.tight_layout()
-plt.savefig(f'visualize_{NUM_TOPICS}.png')
+# plt.savefig(f'visualize_{NUM_TOPICS}.png')
+plt.show()
