@@ -40,13 +40,13 @@ def reccomend(nendo,code):
     return _class_names_cos_sim
 
 df = pd.read_json('syllabus_tfidf.json')
-with open('grade_aipo.csv') as f:
+with open('data/grades/StudentA.csv') as f:
     h = next(csv.reader(f))
     reader = csv.reader(f)
     grades = [e for e in reader]
     f.close()
 
-df2 = pd.read_csv('grade_aipo.csv')
+df2 = pd.read_csv('data/grades/StudentA.csv')
 
 count = 0
 for row in grades:
@@ -54,11 +54,13 @@ for row in grades:
     if topic_grades is not None:
         sum_topic_odds = [topic_grades[i] + sum_topic_odds[i] for i in range(len(topic_grades))]
         count += 1
-
+print("\n嗜好性ベクトル")
 print(sum_topic_odds)
-print(count)
-sum_topic_odds = list(map(lambda x:x/count, sum_topic_odds))
-print(sum_topic_odds)
+print('\n')
+print("おすすめの授業\n")
+# print(count)
+# sum_topic_odds = list(map(lambda x:x/count, sum_topic_odds))
+# print(sum_topic_odds)
 
 
 
@@ -75,7 +77,7 @@ reccomend_class = sorted(class_names_cos_sim, reverse=True, key=lambda x: x[3])
 # print(scipy.stats.zscore(sum_topic_odds))
 
 for i in reccomend_class[0:10]:
-    print(i)
+    print(i[0])
     # class_df = df[(df['年度'] == i[1]) & (df['時間割コード'] == i[2])]
     # print(class_df.values)
     topic_value = get_topic_value(i[1],i[2])

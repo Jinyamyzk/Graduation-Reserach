@@ -80,10 +80,10 @@ for unseen_doc in test_corpus:
     for topic, score in lda_model[unseen_doc]:
         score_by_topic[topic] = score
     topic_results.append(score_by_topic)
+from pprint import pprint
 
 df = pd.read_csv('syllabus_globun.csv')
 df['トピックの確率'] = topic_results
-print(df)
 # df.to_json(f'syllabus_tfidf_{NUM_TOPICS}.json')
 
 np.random.seed(0)
@@ -113,4 +113,4 @@ for i, t in enumerate(range(lda_model.num_topics)):
 
 plt.tight_layout()
 # plt.savefig(f'visualize_{NUM_TOPICS}.png')
-plt.show()
+# plt.show()
