@@ -60,17 +60,18 @@ for i in range(5):
 x = range(start, limit, step)
 
 fig, ax1 = plt.subplots(figsize=(12,5))
-
-c1 = 'darkturquoise'
+plt.rcParams["font.size"] = 18
+c1 = 'red'
 ax1.plot(x, coherence_vals, 'o-', color=c1)
-ax1.set_xlabel('Num Topics')
-ax1.set_ylabel('Coherence', color=c1); ax1.tick_params('y', colors=c1)
+ax1.set_xlabel('Num Topics', fontsize=18)
+ax1.set_ylabel('Coherence', color=c1, fontsize=18); ax1.tick_params('y', colors=c1)
 
-c2 = 'slategray'
+c2 = 'blue'
 ax2 = ax1.twinx()
 ax2.plot(x, perplexity_vals, 'o-', color=c2)
-ax2.set_ylabel('Perplexity', color=c2); ax2.tick_params('y', colors=c2)
+ax2.set_ylabel('Perplexity', color=c2, fontsize=18); ax2.tick_params('y', colors=c2)
 
 ax1.set_xticks(x)
 fig.tight_layout()
 plt.show()
+plt.savefig("topic_gragh.png")

@@ -54,10 +54,7 @@ for row in grades:
     if topic_grades is not None:
         sum_topic_odds = [topic_grades[i] + sum_topic_odds[i] for i in range(len(topic_grades))]
         count += 1
-print("\n嗜好性ベクトル")
-print(sum_topic_odds)
-print('\n')
-print("おすすめの授業\n")
+
 # print(count)
 # sum_topic_odds = list(map(lambda x:x/count, sum_topic_odds))
 # print(sum_topic_odds)
@@ -75,7 +72,10 @@ reccomend_class = sorted(class_names_cos_sim, reverse=True, key=lambda x: x[3])
 
 
 # print(scipy.stats.zscore(sum_topic_odds))
-
+print("\n嗜好性ベクトル")
+print(sum_topic_odds)
+print('\n')
+print("おすすめの授業\n")
 for i in reccomend_class[0:10]:
     print(i[0])
     # class_df = df[(df['年度'] == i[1]) & (df['時間割コード'] == i[2])]

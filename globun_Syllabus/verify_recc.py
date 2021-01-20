@@ -91,7 +91,7 @@ d = pd.DataFrame(result, columns=["ファイル名", "相関係数"])
 from tabulate import tabulate
 print(tabulate(d,d.columns))
 
-
+plt.rcParams["font.size"] = 18
 #figure()でグラフを表示する領域をつくり，figというオブジェクトにする．
 fig = plt.figure()
 
